@@ -4,14 +4,15 @@
 #include <vector>
 
 // ==================== 1. 命名空间和作用域解析运算符 :: ====================
-namespace School {//namespace是用来定义命名空间的关键字，命名空间用于将一组相关的标识符（如变量、函数、类等）组织在一起，以避免名称冲突。
+//命名空间用于将一组相关的标识符（如变量、函数、类等）组织在一起，以避免名称冲突。
+namespace School {//namespace是用来定义命名空间的关键字，School是命名空间的名称
     // 全局变量
     int totalStudents = 0;
     
     // 基类
     class Person {
     public:
-        static int personCount;  // 静态成员
+        static int personCount;  // 静态成员变量，属于类而不是某个对象
         std::string name;
         int age;
         
@@ -42,14 +43,19 @@ namespace School {//namespace是用来定义命名空间的关键字，命名空
     // 子类
     class Student : public Person {
     public:
-        std::string studentId;
+        std::string studentId;//std是标准库命名空间， ：：在这里的作用是指定studentId属于Student类的成员变量，string是std命名空间下的类型。
         double gpa;
         
-        Student(std::string n, int a, std::string id, double g) 
-            : Person(n, a), studentId(id), gpa(g) {}
+        Student(std::string n, int a, std::string id, double g)  // 构造函数的参数
+            : Person(n, a),        // 1. 调用基类Person的构造函数
+            studentId(id),       // 2. 初始化成员变量studentId
+            gpa(g)               // 3. 初始化成员变量gpa
+        {
+            // 构造函数体（这里为空）
+        }
         
         // 重写父类方法
-        void introduce() override {
+        void introduce() override {// override关键字表示这是对基类虚函数的重写
             std::cout << "我是学生 " << name << "，学号: " << studentId 
                       << "，GPA: " << gpa << std::endl;
         }
@@ -258,3 +264,26 @@ int main() {
     std::cout << "\n程序结束！" << std::endl;
     return 0;
 }
+
+// 1. :: 运算符的用法：
+// 访问命名空间成员：School::Person
+
+// 访问静态成员：Person::personCount
+
+// 访问全局变量：::totalStudents
+
+// 在类外定义成员函数：Example::Example()
+
+// 2. -> 运算符的用法：
+// 指针访问成员：personPtr->introduce()
+
+// 智能指针访问成员：smartPtr1->introduce()
+
+// 多态调用：基类指针调用子类方法
+
+// 3. . 运算符的用法：
+// 对象访问成员：person1.introduce()
+
+// 引用访问成员：personRef.introduce()
+
+// 数组元素访问：people[i].introduce()
