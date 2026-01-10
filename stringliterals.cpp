@@ -21,5 +21,10 @@ int main()
     std::u32string str2 = U"Hello, "s + U"World!"s; //
     std::u16string str3 = u"Hello, "s + u"World!"s; //
     std::wstring str4 = L"Hello, "s + L"World!"s; //
+    const char* example = R"(This is a raw string literal.
+It can span multiple lines.
+)";
+    std::cout << example << std::endl;
 
+    return 0;
 }
