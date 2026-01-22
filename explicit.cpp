@@ -17,6 +17,8 @@ private:
 public:
     explicit entity(const std::string& name) : m_name(name), m_age(-1) {}
     explicit entity(int age) : m_name("Unknown"), m_age(age) {}
+    //forbid implicit conversion from string or int to entity, 
+    //must use explicit constructor call
     void printInfo() const {
         std::cout << "Name: " << m_name << ", Age: " << m_age << std::endl;
     }  
