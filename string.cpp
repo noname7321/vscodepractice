@@ -3,6 +3,14 @@
 #include<string>
 #include <cstring>
 
+void printstring(const std::string& str)//use reference to avoid copying
+{
+    for(size_t i = 0; i < str.size(); i++)
+    {
+        std::cout << "Character at index " << i << " : " << str[i] << std::endl;
+    }
+}
+
 int main()
 {
     const char* cstr = "Hello, World!";//C-style string
@@ -17,11 +25,13 @@ int main()
     //''is used for single characters,"" is used for string literals
     std::string str2 =std::string(name1) + " " + std::string(name2)+ std::string("!"); 
     //convert C-style strings to C++ strings and concatenate
+    bool contains = (str1.find("C++23") != std::string::npos); //check if str1 contains "C++23"
+    std::cout << std::boolalpha << contains << std::endl;
 
     std::cout << name1 << std::endl;
     std::cout << name2 << std::endl;
     std::cout << cstr << std::endl;
     std::cout << str1 << std::endl;
     std::cout << str2 << std::endl;
-    
+    printstring(str1);
 }

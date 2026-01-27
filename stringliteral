@@ -1,0 +1,10 @@
+#include<iostream>
+
+int main()
+{
+    "This is a string literal in C++23.";
+    std::cout << "String literals are enclosed in double quotes." << std::endl;
+    std::cout << "They can contain escape sequences like \\n for new line and \\t for tab." << std::endl;
+    std::cout << R"(Raw string literals ignore escape sequences like \n and \t.)" << std::endl;
+    return 0;
+}
