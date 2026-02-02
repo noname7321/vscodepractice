@@ -126,7 +126,7 @@ print(t[1:3])   # (20, 30)
 
 常用方法：
 
-- `dict.get(key, default=None)`：安全读取
+- `dict.get(key, default=None)`：安全读取，字典存在key，返回对应值，不存在返回default的内容
 - `dict.setdefault(key, default)`：不存在则设置
 - `dict.pop(key, default)`：删除并返回
 - `dict.update(other)`：合并

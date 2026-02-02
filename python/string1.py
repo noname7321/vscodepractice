@@ -16,3 +16,5 @@ def main():
 
 if __name__ == '__main__':
 	main()
+	table = str.maketrans("ae", "12", "x")#把字符 'a' 映射为 '1'，把 'e' 映射为 '2'，并把第三个参数中的字符（此处为 'x'）标记为应被删除
+	print("example".translate(table))
