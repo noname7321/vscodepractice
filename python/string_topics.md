@@ -227,6 +227,45 @@ Python 中 `str` 是 Unicode 字符串，`bytes` 是字节序列：
 
 常见编码：`utf-8`、`gbk`、`utf-16`。
 
+### 错误处理参数 `errors`（常用值及含义）
+
+`errors` 参数控制在编码/解码遇到无法处理的字符或字节时的策略。常见取值：
+
+- `strict`：默认。遇到错误时抛出 `UnicodeEncodeError` 或 `UnicodeDecodeError`（不容忍错误）。
+- `ignore`：忽略无法编码/解码的字符或字节（直接丢弃）。
+- `replace`：用替代符替换无法处理的数据；对编码通常插入 `?`，对解码插入 Unicode 替代字符 U+FFFD（�）。
+- `xmlcharrefreplace`：仅用于编码，将无法编码的字符替换为 XML 字符引用（例如 `€` → `&#8364;`）。
+- `backslashreplace`：用反斜杠转义表示无法处理的字节或字符（编码时生成类似 `\uXXXX` 或 `\xHH` 的序列，解码时生成 `\xHH`）。
+- `surrogateescape`：用于解码非法字节时把它们映射到 Unicode 私用区中的代理项（U+DC80..U+DCFF），这样可以实现“无损”地将任意字节串解码为 `str`，再通过 `encode('utf-8','surrogateescape')` 恢复原始字节（常用于处理来自系统或文件的原始字节）。
+
+示例对比：
+
+```python
+# 编码时的行为（源为 Unicode）
+print("µ".encode("ascii", errors="ignore"))            # b'' (丢弃不可编码字符)
+print("µ".encode("ascii", errors="replace"))           # b'?' (用问号替换)
+print("€".encode("ascii", errors="xmlcharrefreplace")) # b'&#8364;'
+print("€".encode("ascii", errors="backslashreplace"))  # b'\\u20ac' 或类似转义表示
+
+# 解码时的行为（源为 bytes）
+bad = b"\xff"
+try:
+	print(bad.decode("utf-8", errors="strict"))
+except Exception as e:
+	print(type(e).__name__, e)                            # 严格模式会抛出异常
+
+print(bad.decode("utf-8", errors="ignore"))            # ''（丢弃非法字节）
+print(bad.decode("utf-8", errors="replace"))           # '�'（U+FFFD 替代字符）
+
+# surrogateescape：可无损 round-trip
+data = b"abc\xffdef"
+text = data.decode('utf-8', errors='surrogateescape')
+print(text)  # 包含私用区代理项
+print(text.encode('utf-8', errors='surrogateescape') == data)  # True
+```
+
+说明：选择哪种 `errors` 策略取决于业务需求——是否能容忍丢失、需要可读的替代显示，或必须保留原始字节以便后续恢复。
+
 ---
 
 ## 6. 数据验证的方法
