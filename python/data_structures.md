@@ -1,14 +1,15 @@
 # Python 常用数据类型：序列、列表、元组、字典、集合
 
-本文档简要介绍 Python 中常用的数据类型，并把相同性质的内容合并说明，减少重复。包含：序列（`str`/`bytes`/`list`/`tuple`）、映射（`dict`）与集合（`set`/`frozenset`）。
+本文档按“每个方法一个示例”的结构讲解 Python 常用数据类型与操作。涵盖：序列（`str`/`bytes`/`list`/`tuple`）、映射（`dict`）与集合（`set`/`frozenset`）。
 
 **目录**
 - 如何创建这些数据类型
-- 序列（通用操作与复杂度）
-- 列表与元组（区别与常用方法）
-- 字典（映射）
-- 集合（Set）
-- 常用内置函数
+- 序列通用操作（每个方法一个示例）
+- 列表（每个方法一个示例）
+- 元组（每个操作一个示例）
+- 字典（每个方法一个示例）
+- 集合（每个方法一个示例）
+- 常用内置函数（每个函数一个示例）
 - 常见注意事项与建议
 
 ---
@@ -38,25 +39,62 @@ fs = frozenset([1, 2])
 
 ---
 
-## 序列（通用操作与复杂度）
+## 序列通用操作（每个方法一个示例）
 
-序列支持索引、切片、迭代和长度查询。适用于 `str`、`bytes`、`list`、`tuple`。
+适用于 `str`、`bytes`、`list`、`tuple`。
 
-通用操作：连接（`+`）、重复（`*`）、成员测试（`in`）、长度（`len()`）。
-
-示例：
+### 索引 `seq[i]`
 
 ```python
-seq = [10, 20, 30, 40, 50]
-print(seq[1])      # 20
-print(seq[1:4])    # [20, 30, 40]
-print(seq + [60])  # [10, 20, 30, 40, 50, 60]
-print(30 in seq)   # True
-print(len(seq))    # 5
+seq = [10, 20, 30]
+print(seq[1])  # 20
 ```
 
-时间复杂度（平均）：
+### 切片 `seq[a:b]`
 
+```python
+seq = [10, 20, 30, 40]
+print(seq[1:3])  # [20, 30]
+```
+
+### 连接 `seq1 + seq2`
+
+```python
+print([1, 2] + [3, 4])  # [1, 2, 3, 4]
+```
+
+### 重复 `seq * n`
+
+```python
+print(["a"] * 3)  # ['a', 'a', 'a']
+```
+
+### 成员测试 `x in seq`
+
+```python
+print(30 in [10, 20, 30])  # True
+```
+
+### 长度 `len(seq)`
+
+```python
+print(len((1, 2, 3)))  # 3
+```
+
+### 查找 `str.find(sub[, start[, end]])` / `str.rfind(sub[, start[, end]])`
+
+```python
+s = "hello world"
+print(s.find("o"))   # 4
+print(s.find("z"))   # -1
+print(s.rfind("o"))  # 7
+```
+
+- `find` 返回子串首次出现的索引，找不到返回 `-1`；`rfind` 返回最后一次出现的索引。
+- 注意：`str.index(sub)` 语义类似，但找不到时会抛出 `ValueError`，而不是返回 `-1`。
+- 同样适用于 `bytes.find` / `bytes.rfind`。
+
+**时间复杂度（平均）**
 - 索引 `seq[i]`：$O(1)$
 - 切片 `seq[a:b]`：$O(k)$（$k$ 为切片长度）
 - 连接 `seq1 + seq2`：$O(n+m)$
@@ -65,45 +103,88 @@ print(len(seq))    # 5
 
 ---
 
-## 列表与元组（区别与常用方法）
+## 列表（每个方法一个示例）
 
-列表可变，适合频繁修改；元组不可变，适合只读、固定结构或作为字典键（元素可哈希时）。
+列表可变，适合频繁增删改。
 
-### 列表常用方法
+### `list.append(x)`：末尾追加
 
-- `list.append(x)`：末尾追加
-- `list.extend(iterable)`：批量追加
-- `list.insert(i, x)`：插入
-- `list.remove(x)`：删除第一个匹配项
-- `list.pop(i=-1)`：弹出并返回
-- `list.sort()` / `sorted()`：排序
-- `list.reverse()`：反转
+```python
+L = [1, 2]
+L.append(3)
+print(L)  # [1, 2, 3]
+```
 
-示例：
+### `list.extend(iterable)`：批量追加
+
+```python
+L = [1, 2]
+L.extend([3, 4])
+print(L)  # [1, 2, 3, 4]
+```
+
+### `list.insert(i, x)`：插入到指定位置
+
+```python
+L = [1, 3]
+L.insert(1, 2)
+print(L)  # [1, 2, 3]
+```
+
+### `list.remove(x)`：删除第一个匹配项
+
+```python
+L = [1, 2, 2, 3]
+L.remove(2)
+print(L)  # [1, 2, 3]
+```
+
+### `list.pop(i=-1)`：弹出并返回
 
 ```python
 L = [1, 2, 3]
-L.append(4)          # [1,2,3,4]
-L.insert(1, 99)      # [1,99,2,3]
-last = L.pop()       # last=4, L=[1,99,2,3]
-print(sorted(L))     # [1,2,3,99]
+last = L.pop()
+print(last, L)  # 3 [1, 2]
 ```
 
-### 元组常用操作
-
-元组不支持就地修改，常见用法是解包。
+### `list.sort(key=None, reverse=False)`：原地排序
 
 ```python
-t = (10, 20, 30)
-x, y, z = t
-print(t[0])     # 10
-print(t[1:3])   # (20, 30)
+L = [3, 1, 2]
+L.sort()
+print(L)  # [1, 2, 3]
 ```
 
-### 时间复杂度（平均）
+### `sorted(iterable, key=None, reverse=False)`：返回新列表
 
-列表：
+```python
+L = [3, 1, 2]
+print(sorted(L, reverse=True))  # [3, 2, 1]
+```
 
+### `list.reverse()`：原地反转
+
+```python
+L = [1, 2, 3]
+L.reverse()
+print(L)  # [3, 2, 1]
+```
+
+### `list.index(x)`：返回首次出现的索引
+
+```python
+L = [10, 20, 30]
+print(L.index(20))  # 1
+```
+
+### `list.count(x)`：统计出现次数
+
+```python
+L = [1, 2, 2, 3]
+print(L.count(2))  # 2
+```
+
+**时间复杂度（平均）**
 - 索引 `L[i]`：$O(1)$
 - 追加 `list.append`：均摊 $O(1)$
 - 末尾弹出 `list.pop()`：$O(1)$
@@ -111,8 +192,43 @@ print(t[1:3])   # (20, 30)
 - 搜索 `list.index` / 成员测试 `x in L`：$O(n)$
 - 排序 `list.sort` / `sorted`：$O(n\log n)$
 
-元组：
+---
 
+## 元组（每个操作一个示例）
+
+元组不可变，适合只读与结构化数据。
+
+### 索引与切片
+
+```python
+t = (10, 20, 30)
+print(t[0])    # 10
+print(t[1:3])  # (20, 30)
+```
+
+### 解包
+
+```python
+t = (1, 2, 3)
+a, b, c = t
+print(a, b, c)  # 1 2 3
+```
+
+### `tuple.count(x)`：统计出现次数
+
+```python
+t = (1, 2, 2, 3)
+print(t.count(2))  # 2
+```
+
+### `tuple.index(x)`：返回首次出现的索引
+
+```python
+t = (10, 20, 30)
+print(t.index(20))  # 1
+```
+
+**时间复杂度（平均）**
 - 索引 `t[i]`：$O(1)$
 - 切片 `t[a:b]`：$O(k)$
 - 成员测试 `x in t`：$O(n)$
@@ -120,31 +236,71 @@ print(t[1:3])   # (20, 30)
 
 ---
 
-## 字典（映射）
+## 字典（每个方法一个示例）
 
-字典是键到值的映射（哈希表），键必须可哈希。适合快速查找与更新。
+字典是键到值的映射（哈希表），键必须可哈希。
 
-常用方法：
+### `d[key]`：读写
 
-- `dict.get(key, default=None)`：安全读取，字典存在key，返回对应值，不存在返回default的内容
-- `dict.setdefault(key, default)`：不存在则设置
-- `dict.pop(key, default)`：删除并返回
-- `dict.update(other)`：合并
-- `dict.keys()` / `dict.values()` / `dict.items()`：视图
+```python
+d = {'a': 1}
+d['b'] = 2
+print(d['a'])  # 1
+```
 
-示例：
+### `dict.get(key, default=None)`：安全读取
+
+```python
+d = {'a': 1}
+print(d.get('c', 0))  # 0
+```
+
+### `dict.setdefault(key, default)`：不存在则设置
+
+```python
+d = {'a': 1}
+print(d.setdefault('b', 2))  # 2
+print(d)  # {'a': 1, 'b': 2}
+```
+
+### `dict.pop(key, default)`：删除并返回
 
 ```python
 d = {'a': 1, 'b': 2}
-print(d['a'])            # 1
-print(d.get('c', 0))     # 0
-d['c'] = 3               # {'a':1,'b':2,'c':3}
-d.pop('b')               # {'a':1,'c':3}
-print('a' in d)          # True
+val = d.pop('b')
+print(val, d)  # 2 {'a': 1}
 ```
 
-时间复杂度（平均）：
+### `dict.update(other)`：合并
 
+```python
+d = {'a': 1}
+d.update({'b': 2})
+print(d)  # {'a': 1, 'b': 2}
+```
+
+### `dict.keys()`：键视图
+
+```python
+d = {'a': 1, 'b': 2}
+print(list(d.keys()))  # ['a', 'b']
+```
+
+### `dict.values()`：值视图
+
+```python
+d = {'a': 1, 'b': 2}
+print(list(d.values()))  # [1, 2]
+```
+
+### `dict.items()`：键值对视图
+
+```python
+d = {'a': 1, 'b': 2}
+print(list(d.items()))  # [('a', 1), ('b', 2)]
+```
+
+**时间复杂度（平均）**
 - 读取/写入 `d[key]`、`dict.get`：$O(1)$
 - 删除 `dict.pop`：$O(1)$
 - 成员测试 `key in d`：$O(1)$
@@ -153,53 +309,122 @@ print('a' in d)          # True
 
 ---
 
-## 集合（Set）
+## 集合（每个方法一个示例）
 
-集合是无序且不重复的容器，适合去重与集合运算。
+集合无序且元素不重复，适合去重与集合运算。
 
-常用方法：
+### `set.add(x)`：添加元素
 
-- `set.add(x)` / `set.update(iterable)`：添加
-- `set.remove(x)` / `set.discard(x)`：删除
-- 并集 `|` / `set.union()`、交集 `&` / `set.intersection()`、差集 `-` / `set.difference()`
+```python
+s = {1, 2}
+s.add(3)
+print(s)  # {1, 2, 3}
+```
 
-示例：
+### `set.update(iterable)`：批量添加
+
+```python
+s = {1, 2}
+s.update([2, 3, 4])
+print(s)  # {1, 2, 3, 4}
+```
+
+### `set.remove(x)`：删除元素（不存在会报错）
 
 ```python
 s = {1, 2, 3}
-s.add(4)          # {1,2,3,4}
-s.discard(2)      # {1,3,4}
-print(3 in s)     # True
-print(s | {5,6})  # {1,3,4,5,6}
+s.remove(2)
+print(s)  # {1, 3}
 ```
 
-时间复杂度（平均）：
+### `set.discard(x)`：删除元素（不存在不报错）
 
+```python
+s = {1, 2, 3}
+s.discard(9)
+print(s)  # {1, 2, 3}
+```
+
+### 并集 `|` / `set.union()`
+
+```python
+a = {1, 2}
+b = {2, 3}
+print(a | b)  # {1, 2, 3}
+```
+
+### 交集 `&` / `set.intersection()`
+
+```python
+a = {1, 2}
+b = {2, 3}
+print(a & b)  # {2}
+```
+
+### 差集 `-` / `set.difference()`
+
+```python
+a = {1, 2}
+b = {2, 3}
+print(a - b)  # {1}
+```
+
+**时间复杂度（平均）**
 - 添加/删除 `set.add` / `set.remove` / `set.discard`：$O(1)$
 - 成员测试 `x in s`：$O(1)$
 - 并集/交集/差集：$O(n+m)$
 
 ---
 
-## 常用内置函数
+## 常用内置函数（每个函数一个示例）
 
-- `len(x)`：长度
-- `min(x)` / `max(x)`：最小/最大
-- `sum(x)`：求和（数字序列）
-- `any(iterable)` / `all(iterable)`：逻辑判断
-- `sorted(iterable, key=..., reverse=...)`：排序
-- `enumerate(iterable, start=0)`：带索引迭代
-- `zip(*iterables)`：并行迭代
-
-示例：
+### `len(x)`：长度
 
 ```python
-items = ['a','b','c']
-for i, v in enumerate(items, 1):
-    print(i, v)
+print(len("abc"))  # 3
+```
 
-pairs = [(1,'one'), (2,'two')]
-d = dict(pairs)
+### `min(x)` / `max(x)`：最小/最大
+
+```python
+print(min([3, 1, 2]), max([3, 1, 2]))  # 1 3
+```
+
+### `sum(x)`：求和
+
+```python
+print(sum([1, 2, 3]))  # 6
+```
+
+### `any(iterable)`：任一为 True
+
+```python
+print(any([0, "", 5]))  # True
+```
+
+### `all(iterable)`：全部为 True
+
+```python
+print(all([1, "x", True]))  # True
+```
+
+### `sorted(iterable, key=None, reverse=False)`：排序
+
+```python
+print(sorted([3, 1, 2]))  # [1, 2, 3]
+```
+
+### `enumerate(iterable, start=0)`：带索引迭代
+
+```python
+items = ['a', 'b', 'c']
+print(list(enumerate(items, 1)))  # [(1, 'a'), (2, 'b'), (3, 'c')]
+```
+
+### `zip(*iterables)`：并行迭代
+
+```python
+print(list(zip([1, 2], ['a', 'b'])))  # [(1, 'a'), (2, 'b')]
 ```
 
 ---
