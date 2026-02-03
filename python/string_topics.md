@@ -60,7 +60,7 @@
 - `str.join(iterable)`：把可迭代对象连接为字符串
 
 	```python
-	print("-".join(["a", "b"]))  # "a-b"
+	print("-".join(["a", "b"]))  # "a-b"，join会加入到中间位置
 	```
 
 - `str.find(sub[, start[, end]])` / `str.rfind(sub[, start[, end]])`：查找子串位置（找不到返回 `-1`）

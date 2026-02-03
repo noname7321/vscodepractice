@@ -79,7 +79,7 @@ print(res2)                   # None -> 因为开头不是 Hello
 
 ### 3.1 `re.search()`
 
-`re.search(pattern, string, flags=0)` 在全文中查找第一次匹配。
+`re.search(pattern, string, flags=0)` 在全文中查找第一次匹配。不会全部查找
 
 参数说明：
 

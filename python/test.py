@@ -30,3 +30,15 @@ print(csv.split(","))      # ['a', 'b', 'c', 'd']
 print(csv.split(",", 2))   # ['a', 'b', 'c,d']
 txt="one1two2three3four4"
 print(txt.split("2"))        # ['one1two', 'three3four4']
+
+import re
+
+# 匹配以 13 开头且第三位为 4-9 的 11 位手机号码（示例）
+pattern = r'13[4-9]\d{8}'#后面是8位就可以了
+
+lst = ['13809876543', '15109876543', '13278965439', '15912345665', '13198765432']
+
+for item in lst:
+    match = re.match(pattern, item)
+    if match is not None:
+        print(match.group())
