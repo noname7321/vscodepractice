@@ -49,7 +49,7 @@
 	print(text.replace("foo", "bar", 2))  # "bar bar foo"
 	```
 
-- `str.split(sep=None, maxsplit=-1)`：分割成列表
+- `str.split(sep=None, maxsplit=-1)`：# 分割成列表,会去掉被分割的东西，默认逗号分割
 
 	```python
 	csv = "a,b,c,d"
@@ -213,7 +213,7 @@ Python 中 `str` 是 Unicode 字符串，`bytes` 是字节序列：
 	```python
 	s = "中文"
 	b = s.encode("utf-8")
-	print(b)  # b'\xe4\xb8\xad\xe6\x96\x87'
+	print(b)  # b'\xe4\xb8\xad\xe6\x96\x87'，前面的b代表这是一个 bytes 字面量（字节序列）
 	print("a?".encode("ascii", errors="ignore"))  # b'a'
 	```
 
@@ -357,7 +357,7 @@ print(result)  # "ban"
 ```python
 s = "banana"
 result = "".join(set(s))
-print(result)  # 顺序不保证
+print(result)  # 输出不重复的字符，顺序不保证
 ```
 
 如果需要按大小写不敏感去重：
