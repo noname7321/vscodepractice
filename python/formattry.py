@@ -1,0 +1,8 @@
+print(format(42, 'b'))  # 输出: 101010 (42 的二进制表示)
+print(format(42, 'o'))  # 输出: 52 (42 的八进制表示)
+print(format('hello', '^20'))  # 输出: '       hello        ' (居中对齐，宽度为20)
+print(format('hello', '<20'))  # 输出: 'hello               ' (左对齐，宽度为20)
+print(format('hello','*<20')) # 输出: 'hello***************' (左对齐，宽度为20，填充字符为 '*')
+print(format('hello', '>20'))  # 输出: '               hello' (右对齐，宽度为20)
+print(format(3.14159, '.2f'))  # 输出: 3.14 (保留两位小数)
+print(format(255, '04x'))  # 输出: 00ff (十六进制表示，宽度为4，前面补0)

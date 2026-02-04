@@ -45,3 +45,7 @@
 
 items = ['a', 'b', 'c']
 print(list(enumerate(items, 2))) 
+
+lines = ["第一行", "第二行", "第三行"]
+for line_num, line in enumerate(lines, start=1):
+    print(f"行 {line_num}: {line}")
