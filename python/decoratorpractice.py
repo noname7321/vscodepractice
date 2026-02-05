@@ -8,6 +8,7 @@ from functools import wraps
 # 为函数/方法增加额外功能”的语法糖，本质是高阶函数
 def timing(func):#接收一个函数func作为参数，返回一个新函数wrapper
     @wraps(func) #用来把原函数的元信息复制到 wrapper 上
+    #wraps 来自 functools 模块，它是一个装饰器，用于装饰包装函数（wrapper function）。
     def wrapper(*args, **kwargs):#接收任意参数
         start = time.time()
         result = func(*args, **kwargs)# *args 会把所有位置参数收集成一个元组
