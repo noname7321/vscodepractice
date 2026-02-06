@@ -42,6 +42,7 @@ def my_func(x):
 my_func(2)  # This will print the execution time of my_func
 
 @timeit
+# @timeit(10) equals to other_func = timeit(10)(other_func)
 def other_func(x):
     return x*2
 print(other_func(5)) 
