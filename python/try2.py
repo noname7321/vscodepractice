@@ -20,15 +20,23 @@ obj3=C("Alice", 30)
 print('the dict of obj1:', obj1.__dict__)
 print('the dict of obj2:', obj2.__dict__)
 print('the dict of obj3:', obj3.__dict__)
-
+print('-----------------')
 print('对象obj1所属于的类 ',obj1.__class__)
 print('对象obj2所属于的类 ',obj2.__class__)
 print('对象obj3所属于的类 ',obj3.__class__)
-
+print('-----------------')
 print('A的父类元组',A.__bases__)
 print('B的父类元组',B.__bases__)
 print('C的父类元组',C.__bases__)#C有两个直接父类A和B
-
+print('-----------------')
 print('A类的父类',A.__base__)
 print('B类的父类',B.__base__)
 print('C类的父类',C.__base__)#C只有一个直接父类A,如果有多个父类，则返回第一个父类
+print('-----------------')
+print('A类的所有父类',A.__mro__)#返回类的所有父类，按搜索顺序排列
+print('B类的所有父类',B.__mro__)#返回类的所有父类，按搜索顺序排列
+print('C类的所有父类',C.__mro__)#返回类的所有父类，按搜索顺序排列
+print('-----------------')
+print('A类的所有子类',A.__subclasses__())#返回A类的所有子类列表
+print('B类的所有子类',B.__subclasses__())#返回B类的所有子类列表 
+print('C类的所有子类',C.__subclasses__())#返回C类的所有子类列表
