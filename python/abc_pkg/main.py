@@ -16,3 +16,5 @@ b.my_function()
 #    - 包已经在当前进程中被导入过一次：`__init__.py` 只在第一次导入时
 #      执行，之后再次导入同一包不会重新执行 `__init__.py`（除非你显式
 #      卸载模块并重新导入）。
+from abc_pkg.my_abc import my_function
+my_function()
