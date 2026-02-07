@@ -11,3 +11,10 @@ b.append(4) # 就地修改该列表对象
 print(a)    # [1, 2, 3, 4]
 print(b)    # [1, 2, 3, 4]
 print(a is b)  # True，表示同一个对象
+
+import re
+
+text = "Price: 100, Price: 200"
+pat = r"\d+"
+res = re.sub(pat, "X", text, count=2)  # 只替换前两个数字
+print(res)                               # "Price: X, Price: X"

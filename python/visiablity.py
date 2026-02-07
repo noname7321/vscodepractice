@@ -14,9 +14,9 @@ class Student():
             print("Age cannot be negative")
 
     def fun_1(self):
-        print("This is a public method.")
+        print("This is a fun_1,a public method.")
     def __fun_2(self):
-        print("This is a private method.")
+        print("This is a __fun_2,a private method.")
     def access_private_method(self):
         self.__fun_2()  # Accessing private method within the class
         self.fun_1()  # Accessing public method within the class
