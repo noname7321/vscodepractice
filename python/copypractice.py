@@ -44,3 +44,7 @@ def copyfile(src, new):
 #     newfile=open(new,"w",encoding="utf-8")
 #     newfile.write(content)
 #     newfile.close()
+def copyfile2(src,new):
+    with open(src,"r",encoding="utf-8") as file:
+        with open(new,"w",encoding="utf-8") as newfile:
+            newfile.write(file.read())
