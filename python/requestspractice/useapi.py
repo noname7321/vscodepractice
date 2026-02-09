@@ -1,5 +1,11 @@
-import requests
 import json
+import os
+import sys
+
+import requests
+
+# Allow importing helpers from the python folder.
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from helpers import display
 def fetch_data(api_url):
     try:
