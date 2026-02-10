@@ -14,6 +14,8 @@ def sub_process2(name):
 if __name__ == "__main__":
     print(f"主进程 {current_process().name} 开始运行，PID: {os.getpid()}")
     
+    # 倘若不指定target参数，process对象会默认执行一个空函数，导致子进程立即结束。
+    # 因此必须指定target参数来告诉子进程要执行哪个函数。
     p1 = Process(target=sub_process1, name="SubProcess1", args=("SubProcess1",))
     p2 = Process(target=sub_process2, name="SubProcess2", args=("SubProcess2",))
     
