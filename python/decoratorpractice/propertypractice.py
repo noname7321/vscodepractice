@@ -62,7 +62,7 @@ def add_chocolate(func):
         print('Chocolate syrup added!')
     return wrapper
 
-@add_sprinkles
+@add_sprinkles # equals to get_ice_cream = add_sprinkles(get_ice_cream)
 @add_chocolate
 def get_ice_cream():
     print('Here is your ice cream')
