@@ -15,9 +15,15 @@ Z=np.sin(R) # calculate the z value as the sine of the distance from the origin
 
 ax.plot_surface(X,Y,Z,rstride=1,cstride=1,cmap=plt.get_cmap('rainbow'))
 # plot_surface() creates a 3D surface plot of the function Z over the grid defined by X and Y.
-# rstride and cstride specify the row and column stride for sampling the data to plot,
+# rstride means "row stride" and cstride means "column stride". 
+# They specify how many rows and columns to skip when plotting the surface.
 # retride=1 means use every row, cstride=1 means use every column,
 #  so the surface will be plotted with all the data points.
 # cmap=plt.cm.hot specifies the colormap to use for coloring the surface.
+
+ax.contourf(X,Y,Z,zdir='z',offset=-2,cmap=plt.get_cmap('rainbow'))
+# contourf() creates filled contour plots.
+# zdir='z' means the contour will be projected onto the plane where z is constant.
+# offset=-2 means the contour will be projected onto the plane z=-2. 
 
 plt.show()
