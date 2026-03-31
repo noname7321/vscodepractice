@@ -17,7 +17,9 @@ struct ParseResult {
     bool   isValid;
 };
 
-ParseResult parseLine(const std::string& line) {
+ParseResult parseLine(const std::string& line) { 
+// 这里我们定义了一个 ParseResult 结构体来表示解析结果，包含行号、值和有效性三个成员变量。
+// parseLine 函数返回一个 ParseResult 对象，表示解析的结果。
     return {10, 3.14, true};
 }
 
@@ -37,7 +39,10 @@ int main() {
 
     auto [success, msg] = login("admin");
 
-    auto [line, value, isValid] = parseLine("10 3.14"); // C++17 结构化绑定
+    auto result = parseLine("...");
+    if (result.isValid) {
+        // result.lineNumber, result.value
+    }
     
     int q, r;
     if (divide(10, 3, q, r)) {
