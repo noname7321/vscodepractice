@@ -1,1 +1,3 @@
 python/pandas_practice/panda_data/survey_results_public.csv
+*.gz
+
